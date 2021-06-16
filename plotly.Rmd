@@ -1,9 +1,30 @@
 ---
-title: "Plotly Tutorial"
+title: "Plotly Introduction"
 output:
   md_document:
     variant: gfm
 ---
+
+# Plotly Introduction Tutorials
+Section 1 - Plotly Syntax
+* Understanding the Plotly syntax/structure
+* The data table, defining x-axis, y-axis and z-axis
+* Adding line onto Plotly chart
+* Adding Multiple line with different color
+* Adding path and other Add_* to Plotly
+
+Section 2 -Plotly Layout
+* Basics of x and y axis
+* Defining customizing lines and grid 
+* Ranges of x and y axis
+* Plotting categorical data
+* Box plot 
+* Adding Shapes and Annotation 
+* Merging Axis from multiple plot
+
+Section 3 - Final Output
+* Plotting a 3D plot, with custom axis, 
+* Annotation and shapes overlay
 
 
 ```{r}
@@ -39,7 +60,7 @@ economics %>% plot_ly(x = ~date, y = ~unemploy/pop) %>% add_paths()
 ```{r}
 # Attributes defined via plot_ly() set 'global' attributes that 
 # are carried onto subsequent traces, but those may be over-written
-plot_ly(economics, x = ~date) %>%
+plot_ly(economics, x = ~date, color = I("black")) %>%
  add_lines(y = ~uempmed,color= I("yellow")) %>%
  add_lines(y = ~psavert, color = I("red"))
 ```
@@ -50,7 +71,7 @@ plot_ly(economics, x = ~date) %>%
 # You might notice plot_ly() has named arguments that aren't in this figure
 # reference. These arguments make it easier to map abstract data values to
 # visual attributes.
-p <- palmerpenguins::penguins %>% plot_ly(x = ~bill_length_mm, y = ~body_mass_g)
+p <- plot_ly(palmerpenguins::penguins, x = ~bill_length_mm, y = ~body_mass_g)
 p
 ```
 
@@ -58,7 +79,7 @@ p
 ```{r}
 p %>% add_lines(linetype = ~species)
 
-p %>% add_paths(linetype = ~species) 
+p %>% add_paths(linetype = ~species)
 
 ```
 
@@ -67,17 +88,17 @@ p %>% add_paths(linetype = ~species)
 
 
 ```{r}
-library(plotly)
+library
 
 a <- list(
   autotick = FALSE,
   ticks = "outside",
   tick0 = 0,
-  ticklen = 20,
+  dtick = 0.25,
+  ticklen = 5,
   tickwidth = 2,
-  tickcolor = toRGB("red")
+  tickcolor = toRGB("blue")
 )
-
 x <- seq(1, 4, by = 0.25)
 y <- seq(1, 4, by = 0.25)
 
@@ -102,7 +123,6 @@ ax <- list(
   linecolor = toRGB("black"),
   linewidth = 6
 )
-
 s <- seq(-1, 4)
 fig <- plot_ly(x = ~s, y = ~s)
 fig <- fig %>% layout(xaxis = ax, yaxis = ax)
@@ -144,31 +164,24 @@ x <- seq(0, 10, length=50)
 y <- runif(n = 50, min = 0, max = 10)
 
 fig <- plot_ly(x = x, y = y)
-fig <- fig %>% layout(xaxis = list(range = c(0, 50)))
-fig
-```
-
-
-```{r}
-
 fig <- fig %>% layout(xaxis = list(range = c(0, 10)))
+
 fig
 ```
 
 
 ```{r}
+library(plotly)
 
 fig <- plot_ly(
   x = c('A12', 'BC2', 109, '12F', 215, 304),
   y = c(1,6,3,5,1,4),
-  name = 'Team A'
+  type = 'bar',
+  name = 'Team A',
+  text = c('Apples', 'Pears', 'Peaches', 'Bananas', 'Pineapples', 'Cherries')
 )
 
-fig
-```
 
-
-```{r}
 fig <- fig %>% layout(
   title = 'Inventory',
   
@@ -217,6 +230,8 @@ fig <- fig %>% layout(
     yaxis = list(
       autorange = TRUE, 
       categoryorder = "category descending", 
+      domain = c(0, 1), 
+      range = c(-0.5, 3.5), 
       showline = TRUE, 
       title = "", 
       type = "category"
@@ -228,8 +243,8 @@ fig <- fig %>% layout(
       l = 110
     ),
     legend = list(
-      x = 0.50, 
-      y = 0.50
+      x = 0.98, 
+      y = 0.98
     ) 
 )
 
@@ -306,11 +321,7 @@ fig
 
 
 ```{r}
-fig <- plot_ly(orientation='h', line=list(color='gray'), height=400, width=600)
-fig <- fig %>% add_boxplot(x=c(2,3,1,5), y=c('A','A','A','A'), name='A')
-fig <- fig %>% add_boxplot(x=c(8,3,6,5), y=c('B','B','B','B'), name='B')
-fig <- fig %>% add_boxplot(x=c(2,3,2,5), y=c('C','C','C','C'), name='C')
-fig <- fig %>% add_boxplot(x=c(7.5,3,6,4), y=c('D','D','D','D'), name='D')
+
 
 fig <- fig %>% layout(
     title = '',
@@ -539,9 +550,8 @@ scene = list(
   zaxis = axis,
   camera = list(eye = list(x = -1.25, y = 1.25, z = 1.25)))
 
-#https://www.rdocumentation.org/packages/plotly/versions/4.9.3/topics/plot_ly
 
-fig <- ds %>% plot_ly(x = ~cut, y = ~clarity, z = ~price, type= "scatter3d", mode = 'markers', marker = list(size = 3))
+fig <- plot_ly(ds, x = ~cut, y = ~clarity, z = ~price, type = 'scatter3d', mode = 'markers', marker = list(size = 3))
 fig <- fig %>% layout(title = "3D Scatter plot", 
                       scene = scene)
 
@@ -598,7 +608,7 @@ fig <- fig %>% layout(title = "3D Scatter plot",
                       shapes =      list(
                                       line = list(
                                         color = "rgba(68, 68, 68, 0.5)", 
-                                        width = 3
+                                        width = 1
                                       ), 
                                       type = "line", 
                                       x0 = 0.0, 
