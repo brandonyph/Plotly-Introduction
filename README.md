@@ -14,7 +14,7 @@ Section 2 -Plotly Layout
 4. Plotting categorical data  
 5. Box plot  
 6. Adding Shapes and Annotation  
-7.Merging Axis from multiple plot
+7. Merging Axis from multiple plot
 
 Section 3 - Final Output  
 1. Plotting a 3D plot, with custom axis  
@@ -536,7 +536,7 @@ library
     ##         TRUE
     ##     else invisible(.packages())
     ## }
-    ## <bytecode: 0x0000000012ae4048>
+    ## <bytecode: 0x0000000012ae4148>
     ## <environment: namespace:base>
 
 ``` r
