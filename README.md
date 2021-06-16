@@ -7,7 +7,8 @@ Section 1 - Plotly Syntax
 4. Adding Multiple line with different color  
 5. Adding path and other Add\_\* to Plotly
 
-Section 2 -Plotly Layout 1. Basics of x and y axis  
+Section 2 -Plotly Layout  
+1. Basics of x and y axis  
 2. Defining customizing lines and grid  
 3. Ranges of x and y axis  
 4. Plotting categorical data  
@@ -15,7 +16,8 @@ Section 2 -Plotly Layout 1. Basics of x and y axis
 6. Adding Shapes and Annotation  
 7.Merging Axis from multiple plot
 
-Section 3 - Final Output 1. Plotting a 3D plot, with custom axis  
+Section 3 - Final Output  
+1. Plotting a 3D plot, with custom axis  
 2. Annotation and shapes overlay
 
 ``` r
@@ -534,7 +536,7 @@ library
     ##         TRUE
     ##     else invisible(.packages())
     ## }
-    ## <bytecode: 0x0000000012ae4158>
+    ## <bytecode: 0x0000000012ae4048>
     ## <environment: namespace:base>
 
 ``` r
