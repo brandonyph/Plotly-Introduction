@@ -1,17 +1,22 @@
 # Plotly Introduction Tutorials
 
-Section 1 - Plotly Syntax 1. Understanding the Plotly syntax/structure
-2. The data table, defining x-axis, y-axis and z-axis 3. Adding line
-onto Plotly chart 4. Adding Multiple line with different color 5. Adding
-path and other Add\_\* to Plotly
+Section 1 - Plotly Syntax  
+1. Understanding the Plotly syntax/structure  
+2. The data table, defining x-axis, y-axis and z-axis  
+3. Adding line onto Plotly chart  
+4. Adding Multiple line with different color  
+5. Adding path and other Add\_\* to Plotly
 
-Section 2 -Plotly Layout 1. Basics of x and y axis 2. Defining
-customizing lines and grid 3. Ranges of x and y axis 4. Plotting
-categorical data 5. Box plot 6. Adding Shapes and Annotation 7. Merging
-Axis from multiple plot
+Section 2 -Plotly Layout 1. Basics of x and y axis  
+2. Defining customizing lines and grid  
+3. Ranges of x and y axis  
+4. Plotting categorical data  
+5. Box plot  
+6. Adding Shapes and Annotation  
+7.Merging Axis from multiple plot
 
-Section 3 - Final Output 8. Plotting a 3D plot, with custom axis, 9.
-Annotation and shapes overlay
+Section 3 - Final Output 1. Plotting a 3D plot, with custom axis  
+2. Annotation and shapes overlay
 
 ``` r
 library(plotly)
@@ -529,7 +534,7 @@ library
     ##         TRUE
     ##     else invisible(.packages())
     ## }
-    ## <bytecode: 0x0000000012ae4178>
+    ## <bytecode: 0x0000000012ae4158>
     ## <environment: namespace:base>
 
 ``` r
