@@ -1,6 +1,8 @@
 ---
-title: "Plotly"
-output: html_document
+title: "Plotly Tutorial"
+output:
+  md_document:
+    variant: gfm
 ---
 
 
@@ -11,6 +13,10 @@ library(plotly)
 # give it. If you don't provide a trace type, plot_ly() will infer one.
 plot_ly(economics, x = ~pop)
 plot_ly(economics, x = ~date, y = ~pop)
+```
+
+
+```{r}
 # plot_ly() doesn't require data frame(s), which allows one to take 
 # advantage of trace type(s) designed specifically for numeric matrices
 plot_ly(z = ~volcano)
@@ -24,15 +30,17 @@ plot_ly(z = ~volcano, type = "surface")
 add_lines(plot_ly(economics, x = ~date, y = ~unemploy/pop))
 
 # To make code more readable, plotly imports the pipe operator from magrittr
-economics %>% plot_ly(x = ~date, y = ~unemploy/pop) %>% add_lines()
+economics %>% plot_ly(x = ~date, y = ~unemploy/pop, z=~pce) %>% add_lines()
+
+economics %>% plot_ly(x = ~date, y = ~unemploy/pop) %>% add_paths()
 ```
 
 
 ```{r}
 # Attributes defined via plot_ly() set 'global' attributes that 
 # are carried onto subsequent traces, but those may be over-written
-plot_ly(economics, x = ~date, color = I("black")) %>%
- add_lines(y = ~uempmed) %>%
+plot_ly(economics, x = ~date) %>%
+ add_lines(y = ~uempmed,color= I("yellow")) %>%
  add_lines(y = ~psavert, color = I("red"))
 ```
 
@@ -42,10 +50,15 @@ plot_ly(economics, x = ~date, color = I("black")) %>%
 # You might notice plot_ly() has named arguments that aren't in this figure
 # reference. These arguments make it easier to map abstract data values to
 # visual attributes.
-p <- plot_ly(palmerpenguins::penguins, x = ~bill_length_mm, y = ~body_mass_g)
+p <- palmerpenguins::penguins %>% plot_ly(x = ~bill_length_mm, y = ~body_mass_g)
 p
+```
 
-p %>% add_paths(linetype = ~species)
+
+```{r}
+p %>% add_lines(linetype = ~species)
+
+p %>% add_paths(linetype = ~species) 
 
 ```
 
@@ -54,17 +67,17 @@ p %>% add_paths(linetype = ~species)
 
 
 ```{r}
-library
+library(plotly)
 
 a <- list(
   autotick = FALSE,
   ticks = "outside",
   tick0 = 0,
-  dtick = 0.25,
-  ticklen = 5,
+  ticklen = 20,
   tickwidth = 2,
-  tickcolor = toRGB("blue")
+  tickcolor = toRGB("red")
 )
+
 x <- seq(1, 4, by = 0.25)
 y <- seq(1, 4, by = 0.25)
 
@@ -89,6 +102,7 @@ ax <- list(
   linecolor = toRGB("black"),
   linewidth = 6
 )
+
 s <- seq(-1, 4)
 fig <- plot_ly(x = ~s, y = ~s)
 fig <- fig %>% layout(xaxis = ax, yaxis = ax)
@@ -100,7 +114,7 @@ fig
 ```{r}
 library(plotly)
 ax <- list(
-  title = "",
+  title = "this is the tittle",
   zeroline = FALSE,
   showline = FALSE,
   showticklabels = FALSE,
@@ -109,6 +123,7 @@ ax <- list(
 
 fig <- plot_ly(x = c(1, 2), y = c(1, 2))
 fig <- fig %>% layout(xaxis = ax, yaxis = ax)
+
 
 fig
 ```
@@ -129,24 +144,31 @@ x <- seq(0, 10, length=50)
 y <- runif(n = 50, min = 0, max = 10)
 
 fig <- plot_ly(x = x, y = y)
+fig <- fig %>% layout(xaxis = list(range = c(0, 50)))
+fig
+```
+
+
+```{r}
+
 fig <- fig %>% layout(xaxis = list(range = c(0, 10)))
+fig
+```
+
+
+```{r}
+
+fig <- plot_ly(
+  x = c('A12', 'BC2', 109, '12F', 215, 304),
+  y = c(1,6,3,5,1,4),
+  name = 'Team A'
+)
 
 fig
 ```
 
 
 ```{r}
-library(plotly)
-
-fig <- plot_ly(
-  x = c('A12', 'BC2', 109, '12F', 215, 304),
-  y = c(1,6,3,5,1,4),
-  type = 'bar',
-  name = 'Team A',
-  text = c('Apples', 'Pears', 'Peaches', 'Bananas', 'Pineapples', 'Cherries')
-)
-
-
 fig <- fig %>% layout(
   title = 'Inventory',
   
@@ -170,6 +192,120 @@ fig
 ```{r setup, include=FALSE}
 library(plotly)
 
+fig <- plot_ly(orientation='h', line=list(color='gray'), height=400, width=600)
+fig <- fig %>% add_boxplot(x=c(2,3,1,5), y=c('A','A','A','A'), name='A')
+fig <- fig %>% add_boxplot(x=c(8,3,6,5), y=c('B','B','B','B'), name='B')
+fig <- fig %>% add_boxplot(x=c(2,3,2,5), y=c('C','C','C','C'), name='C')
+fig <- fig %>% add_boxplot(x=c(7.5,3,6,4), y=c('D','D','D','D'), name='D')
+
+fig
+```
+
+
+
+```{r}
+#https://plotly.com/r/reference/layout/shapes/
+
+fig <- plot_ly(orientation='h', line=list(color='gray'), height=400, width=600)
+fig <- fig %>% add_boxplot(x=c(2,3,1,5), y=c('A','A','A','A'), name='A')
+fig <- fig %>% add_boxplot(x=c(8,3,6,5), y=c('B','B','B','B'), name='B')
+fig <- fig %>% add_boxplot(x=c(2,3,2,5), y=c('C','C','C','C'), name='C')
+fig <- fig %>% add_boxplot(x=c(7.5,3,6,4), y=c('D','D','D','D'), name='D')
+
+fig <- fig %>% layout(
+    title = '',
+    yaxis = list(
+      autorange = TRUE, 
+      categoryorder = "category descending", 
+      showline = TRUE, 
+      title = "", 
+      type = "category"
+    ),
+    margin = list(
+      r = 10, 
+      t = 25, 
+      b = 40, 
+      l = 110
+    ),
+    legend = list(
+      x = 0.50, 
+      y = 0.50
+    ) 
+)
+
+fig
+```
+
+
+```{r}
+
+fig <- plot_ly(orientation='h', line=list(color='gray'), height=400, width=600)
+fig <- fig %>% add_boxplot(x=c(2,3,1,5), y=c('A','A','A','A'), name='A')
+fig <- fig %>% add_boxplot(x=c(8,3,6,5), y=c('B','B','B','B'), name='B')
+fig <- fig %>% add_boxplot(x=c(2,3,2,5), y=c('C','C','C','C'), name='C')
+fig <- fig %>% add_boxplot(x=c(7.5,3,6,4), y=c('D','D','D','D'), name='D')
+
+
+fig <- fig %>% layout(
+    title = '',
+    yaxis = list(
+      autorange = TRUE, 
+      categoryorder = "category descending", 
+      domain = c(0, 1), 
+      range = c(-0.5, 3.5), 
+      showline = TRUE, 
+      title = "", 
+      type = "category"
+    ),
+    margin = list(
+      r = 10, 
+      t = 25, 
+      b = 40, 
+      l = 110
+    ),
+    legend = list(
+      x = 0.986145833333, 
+      y = 0.936263886049
+    ), 
+    shapes = list(
+      list(
+        line = list(
+          color = "rgba(68, 68, 68, 0.5)", 
+          width = 1
+        ), 
+        type = "line", 
+        x0 = -0.3, 
+        x1 = 1.2, 
+        xref = "paper", 
+        y0 = 0, 
+        y1 = 0, 
+        yref = "paper"
+      ), 
+      list(
+        line = list(
+          color = "rgba(68, 68, 68, 0.63)", 
+          width = 1
+        ), 
+        type = "line", 
+        x0 = -0.3, 
+        x1 = 1.2, 
+        xref = "paper", 
+        y0 = 1, 
+        y1 = 1, 
+        yref = "paper"
+      )
+    )
+  )
+
+fig
+```
+
+
+
+
+
+
+```{r}
 fig <- plot_ly(orientation='h', line=list(color='gray'), height=400, width=600)
 fig <- fig %>% add_boxplot(x=c(2,3,1,5), y=c('A','A','A','A'), name='A')
 fig <- fig %>% add_boxplot(x=c(8,3,6,5), y=c('B','B','B','B'), name='B')
@@ -266,28 +402,42 @@ fig
 
 
 
-
-
-
 ```{r}
-
 library(plotly)
 
 fig <- plot_ly(
     width = 800,
     height = 500
-  )
+)
+
+fig
+```
+
+
+```{r}
 fig <- fig %>% add_trace(
     x = c(0,1,1,0,0,1,1,2,2,3,3,2,2,3),
     y = c(0,0,1,1,3,3,2,2,3,3,1,1,0,0),
     mode = 'lines'
   )
+
+fig
+```
+
+
+```{r}
 fig <- fig %>% add_trace(
     x = c(0,1,2,3),
     y = c(1,2,4,8),
     yaxis = "y2",
     mode = 'lines'
   )
+
+fig
+```
+
+
+```{r}
 fig <- fig %>% add_trace(
     x = c(1,10,100,10,1),
     y = c(0,1,2,3,4),
@@ -295,6 +445,12 @@ fig <- fig %>% add_trace(
     yaxis ="y3",
     mode = 'lines'
   )
+
+fig
+```
+
+
+```{r}
 fig <- fig %>% add_trace(
     x = c(1,100,30,80,1),
     y = c(1,1.5,2,2.5,3),
@@ -302,6 +458,12 @@ fig <- fig %>% add_trace(
     yaxis = "y4",
     mode = 'lines'
   )
+
+fig
+```
+
+
+```{r}
 fig <- fig %>% layout(
     title = "fixed-ratio axes",
     xaxis = list(
@@ -347,33 +509,6 @@ fig
 ```
 
 
-```{r}
-library(plotly)
-fig <- plot_ly(x = seq(2, 6, by = 2), y = seq(-3, 3, by = 3))
-
-fig <- fig %>% layout(
-    xaxis = list(rangemode = "tozero"),
-    yaxis = list(rangemode = "nonnegative"))
-
-fig
-```
-
-```{r}
-library(plotly)
-s <- seq(1, 8)
-fig <- plot_ly(x = s, y = s)
-fig <- fig %>% add_trace(y = rev(s))
-fig <- fig %>% layout(
-    xaxis = list(range = c(2, 5)),
-    yaxis = list(range = c(2, 5)))
-
-fig
-```
-
-
-
-
-
 
 ```{r}
 set.seed(123)
@@ -404,11 +539,78 @@ scene = list(
   zaxis = axis,
   camera = list(eye = list(x = -1.25, y = 1.25, z = 1.25)))
 
+#https://www.rdocumentation.org/packages/plotly/versions/4.9.3/topics/plot_ly
 
-fig <- plot_ly(ds, x = ~cut, y = ~clarity, z = ~price, type = 'scatter3d', mode = 'markers', marker = list(size = 3))
-fig <- fig %>% layout(title = "3D Scatter plot", scene = scene)
+fig <- ds %>% plot_ly(x = ~cut, y = ~clarity, z = ~price, type= "scatter3d", mode = 'markers', marker = list(size = 3))
+fig <- fig %>% layout(title = "3D Scatter plot", 
+                      scene = scene)
 
 fig
 ```
 
+```{r}
+set.seed(123)
+
+# Create Random Data
+ds <- diamonds[sample(1:nrow(diamonds), size = 1000),]
+
+# Create lists for axis properties
+f1 <- list(
+  family = "Arial, sans-serif",
+  size = 12,
+  color = "lightgrey")
+
+f2 <- list(
+  family = "Old Standard TT, serif",
+  size = 12,
+  color = "#ff9999")
+
+axis <- list(
+  titlefont = f1,
+  tickfont = f2,
+  showgrid = F
+)
+
+scene = list(
+  xaxis = axis,
+  yaxis = axis,
+  zaxis = axis,
+  camera = list(eye = list(x = -2, y = 2, z = 1.25)))
+
+
+fig <- plot_ly(ds, x = ~cut, y = ~clarity, z = ~price, type = 'scatter3d', mode = 'markers', marker = list(size = 3))
+fig <- fig %>% layout(title = "3D Scatter plot", 
+                      scene = scene,
+                       margin = list(
+                                      r = 10,
+                                      t = 25, 
+                                      b = 110, 
+                                      l = 10
+                                    ),
+                      annotations = list(
+                                        x = 0.5, 
+                                        y = 0.0, 
+                                        showarrow = FALSE, 
+                                        text = "This is added with Annotation, but shouldn't", 
+                                        xref = "paper", 
+                                        yref = "paper"
+                                      ),
+                      shapes =      list(
+                                      line = list(
+                                        color = "rgba(68, 68, 68, 0.5)", 
+                                        width = 3
+                                      ), 
+                                      type = "line", 
+                                      x0 = 0.0, 
+                                      x1 = 1.0, 
+                                      xref = "paper", 
+                                      y0 = -0.0, 
+                                      y1 = 0.0, 
+                                      yref = "paper"
+                                    ) 
+                    )
+                      
+
+fig
+```
 
