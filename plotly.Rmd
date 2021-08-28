@@ -5,7 +5,7 @@ output:
     variant: gfm
 ---
 
-# Plotly Introduction Tutorials
+# Plotly Introduction- A Tutorial
 Section 1 - Plotly Syntax  
 1. Understanding the Plotly syntax/structure  
 2. The data table, defining x-axis, y-axis and z-axis  
